@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKSSF Pandikkadave Unit - Official Website & Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Malayalam', sans-serif;
+            background-color: #f4f6f8;
+        }
+        .skssf-green { background-color: #006837; }
+        .skssf-green-dark { background-color: #004d28; }
+        .skssf-gold { background-color: #d4af37; }
+        .text-skssf-green { color: #006837; }
+        .border-skssf-green { border-color: #006837; }
+        
+        /* Simulated Mobile Container */
+        .mobile-view {
+            max-width: 430px;
+            margin: 20px auto;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            border: 12px solid #1f2937;
+            overflow: hidden;
+            background: #f4f6f8;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- View Mode Switcher Header Bar -->
+    <header class="bg-gray-900 text-white py-2 px-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm">
+            <div class="flex items-center space-x-2">
+                <span class="inline-block w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="font-semibold text-xs sm:text-sm">SKSSF Pandikkadave Unit Portal</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="viewToggleBtn" onclick="toggleViewMode()" class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-mobile-screen"></i> <span id="toggleBtnText">Switch to App View</span>
+                </button>
+                <div id="userHeaderStatus" class="hidden sm:flex items-center gap-2">
+                    <!-- Populated dynamically if logged in -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div id="appContainer" class="w-full flex-grow transition-all duration-300">
+        
+        <!-- TOP BRANDING BANNER (SKSSF Main Portal Style) -->
+        <div class="bg-white border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 rounded-full flex items-center justify-center text-white font-extrabold text-xl shadow-md border-2 border-amber-400 flex-shrink-0">
+                        SKSSF
+                    </div>
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-emerald-900 tracking-tight">SKSSF</h1>
+                        <p class="text-xs sm:text-sm font-semibold text-gray-600">Samastha Kerala Sunni Students Federation</p>
+                        <p class="text-xs text-amber-600 font-bold tracking-wider">PANDIKKADAVE UNIT</p>
+                    </div>
+                </div>
+                <div class="text-center md:text-right bg-emerald-50 px-4 py-2 rounded-lg border border-emerald-100">
+                    <p class="text-xs text-emerald-800 font-semibold mb-1">നമ്മുടെ ലക്ഷ്യം:</p>
+                    <p class="text-sm sm:text-base font-bold text-emerald-950 font-malayalam">"വിജ്ഞാനം, വിനയം, സേവനം"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN NAVIGATION MENU -->
+        <nav class="skssf-green text-white shadow-lg sticky top-10 z-40">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-12 overflow-x-auto hide-scrollbar">
+                    <div class="flex items-center space-x-1 sm:space-x-4 text-xs sm:text-sm font-semibold whitespace-nowrap">
+                        <button onclick="showTab('homeTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition active-nav" id="homeTabBtn"><i class="fa-solid fa-house mr-1"></i> Home</button>
+                        <button onclick="showTab('membersTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="membersTabBtn"><i class="fa-solid fa-users mr-1"></i> Members Directory</button>
+                        <button onclick="showTab('wingsTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="wingsTabBtn"><i class="fa-solid fa-sitemap mr-1"></i> 7 Sub Wings</button>
+                        <button onclick="showTab('galleryTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="galleryTabBtn"><i class="fa-solid fa-images mr-1"></i> Gallery & Writings</button>
+                        <button onclick="showTab('sahachariTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="sahachariTabBtn"><i class="fa-solid fa-hand-holding-heart mr-1"></i> Sahachari Relief</button>
+                    </div>
+                    <div class="pl-4 border-l border-emerald-600">
+                        <button id="authNavBtn" onclick="handleAuthButtonClick()" class="bg-amber-400 hover:bg-amber-500 text-emerald-950 px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-right-to-bracket"></i> <span id="authNavText">Member Login</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- MAIN BODY CONTENT AREA -->
+        <main class="max-w-7xl mx-auto px-4 py-6">
+
+            <!-- TAB 1: HOME PAGE (Official SKSSF Grid & Feed) -->
+            <div id="homeTab" class="tab-content space-y-6">
+                <!-- HERO NEWS & FEATURED CAROUSEL -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                        <div class="relative bg-emerald-900 text-white h-64 sm:h-80 flex items-end p-6 bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80');">
+                            <div>
+                                <span class="bg-amber-500 text-gray-900 text-xs font-extrabold px-2.5 py-1 rounded mb-2 inline-block">UNIT HIGHLIGHT</span>
+                                <h2 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-tight">എസ്.കെ.എസ്.എസ്.എഫ് പണ്ടിക്കടവ് യൂണിറ്റ് പ്രവർത്തനം വിപുലീകരിക്കുന്നു</h2>
+                                <p class="text-xs sm:text-sm text-gray-200 line-clamp-2">യൂണിറ്റിലെ 113 അംഗങ്ങളുടെ അംഗത്വ വിവരങ്ങളും പ്രവർത്തന രൂപരേഖയും ഡിജിറ്റൽ പോർട്ടലിലേക്ക് മാറ്റി.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-emerald-50 border-t border-emerald-100 flex justify-between items-center">
+                            <span class="text-xs text-emerald-800 font-semibold"><i class="fa-regular fa-clock mr-1"></i> Oct 2026</span>
+                            <span class="text-xs text-emerald-700 font-bold">Pandikkadave Unit Council</span>
+                        </div>
+                    </div>
+
+                    <!-- MEMBER QUICK ACTIONS / PROFILE SUMMARY -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+                                <h3 class="font-bold text-gray-900 text-base"><i class="fa-solid fa-address-card text-emerald-700 mr-2"></i>Member Status</h3>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Verified</span>
+                            </div>
+                            
+                            <div id="homeUserCard" class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-center">
+                                <i class="fa-solid fa-circle-user text-5xl text-gray-400 mb-2"></i>
+                                <p class="text-sm font-bold text-gray-800">Public Visitor</p>
+                                <p class="text-xs text-gray-500 mb-3">Log in with your Membership No. to edit profile & access digital ID.</p>
+                                <button onclick="openLoginModal()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded text-xs transition">
+                                    Member Login
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Quick Stats</h4>
+                            <div class="grid grid-cols-2 gap-2 text-center">
+                                <div class="bg-emerald-50 p-2 rounded">
+                                    <p class="text-lg font-black text-emerald-800" id="totalMembersCount">113</p>
+                                    <p class="text-xs text-gray-600 font-medium">Unit Members</p>
+                                </div>
+                                <div class="bg-amber-50 p-2 rounded">
+                                    <p class="text-lg font-black text-amber-800">7</p>
+                                    <p class="text-xs text-gray-600 font-medium">Sub Wings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3-COLUMN NOTIFICATIONS / NEWS / CAMPAIGNS -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-5 rounded-xl shadow border border-gray-200">
+                        <div class="flex items-center space-x-2 border-b border-gray-200 pb-3 mb-3">
+                            <i class="fa-solid fa-bell text-amber-500 text-lg"></i>
+                            <h3 class="font-bold text-emerald-950 uppercase text-sm tracking-wider">Notifications</h3>
+                        </div>
+                        <ul class="space-y-3 text-xs sm:text-sm">
+                            <li class="pb-2 border-b border-gray-100">
+                                <span class="text-xs text-emerald-700 font-bold block">1 Oct 2026</span>
+                                <a href="#" class="hover:underline font-semibold text-gray-800">യൂണിറ്റ് കാമ്പസ് വിംഗ് സംഗമം ഈ വരുന്ന ശനിയാഴ്ച.</a>
+                            </li>
+                            <li class="pb-2 border-b border-gray-100">
+                                <span class="text-xs text-emerald-700 font-bold block">28 Sep 2026</span>
+                                <a href="#" class="hover:underline font-semibold text-gray-800">സഹചാരി റിലീഫ് ഫണ്ട് ശേഖരണം ആരംഭിച്ചു.</a>
+                            </li>
+                            <li>
+                                <span class="text-xs text-emerald-700 font-bold block">20 Sep 2026</span>
+                                <a href="#" class="hover:underline font-semibold text-gray-800">വിഖായ വളണ്ടിയർ രജിസ്ട്രേഷൻ പുതുക്കുക.</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border border-gray-200">
+                        <div class="flex items-center space-x-2 border-b border-gray-200 pb-3 mb-3">
+                            <i class="fa-solid fa-newspaper text-emerald-600 text-lg"></i>
+                            <h3 class="font-bold text-emerald-950 uppercase text-sm tracking-wider">Unit News</h3>
+                        </div>
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="flex gap-3">
+                                <div class="w-16 h-16 bg-gray-200 rounded flex-shrink-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1577563908411-5077b6dc7624?auto=format&fit=crop&w=200&q=80');"></div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 hover:text-emerald-700 cursor-pointer">ഖുർആൻ സ്റ്റഡി സെന്റർ പുതിയ ബാച്ച് പ്രവേശനം</h4>
+                                    <p class="text-xs text-gray-500 mt-1">പണ്ടിക്കടവ് ശാഖാ കമ്മറ്റി നേതൃത്വത്തിൽ...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-xl shadow border border-gray-200">
+                        <div class="flex items-center space-x-2 border-b border-gray-200 pb-3 mb-3">
+                            <i class="fa-solid fa-bullhorn text-red-500 text-lg"></i>
+                            <h3 class="font-bold text-emerald-950 uppercase text-sm tracking-wider">Active Campaigns</h3>
+                        </div>
+                        <div class="bg-amber-50 border border-amber-200 p-3 rounded-lg mb-3">
+                            <span class="bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded">STATE CAMPAIGN</span>
+                            <h4 class="font-bold text-emerald-950 text-xs sm:text-sm mt-1">സത്യധാര പ്രചാരണ കാമ്പയിൻ</h4>
+                            <p class="text-xs text-gray-600 mt-1">പണ്ടിക്കടവ് യൂണിറ്റ് തല വരിസംഖ്യ ശേഖരണം നടക്കുന്നു.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: MEMBERS DIRECTORY (113 MEMBERS FROM CSV) -->
+            <div id="membersTab" class="tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow border border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div>
+                            <h2 class="text-xl font-extrabold text-emerald-900">Unit Members Directory</h2>
+                            <p class="text-xs text-gray-500">Total Registered Members in Pandikkadave Unit: <span class="font-bold text-emerald-800">113</span></p>
+                        </div>
+                        <div class="w-full sm:w-72 relative">
+                            <input type="text" id="memberSearchInput" onkeyup="filterMembers()" placeholder="Search member name or ID..." class="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400 text-xs"></i>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs sm:text-sm border-collapse">
+                            <thead>
+                                <tr class="bg-emerald-900 text-white">
+                                    <th class="p-3 rounded-l">Member Name</th>
+                                    <th class="p-3">Membership Number</th>
+                                    <th class="p-3">Contact Mobile</th>
+                                    <th class="p-3">WhatsApp</th>
+                                    <th class="p-3 rounded-r text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersTableBody" class="divide-y divide-gray-200">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: 7 SUB WINGS OF SKSSF -->
+            <div id="wingsTab" class="tab-content hidden space-y-6">
+                <div class="text-center max-w-2xl mx-auto mb-4">
+                    <h2 class="text-2xl font-extrabold text-emerald-950">SKSSF 7 Sub-Wings</h2>
+                    <p class="text-xs sm:text-sm text-gray-600"> Specialized wings driving education, social service, spiritual growth, and leadership in Pandikkadave Unit.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 1. Sahachari -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-rose-700 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">1. Sahachari (സഹചാരി)</h3>
+                            <i class="fa-solid fa-hand-holding-heart text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">Relief & Humanitarian Services</p>
+                            <p>Provides medical aid, monthly pensions to needy families, and emergency relief support.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Viqaya -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-emerald-800 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">2. Viqaya (വിഖായ)</h3>
+                            <i class="fa-solid fa-user-shield text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">Volunteer & Disaster Defense Wing</p>
+                            <p>Trained volunteers dedicated to community protection, event discipline, and emergency rescue operations.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Twaha -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-amber-600 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">3. Twaha (ത്വഹ)</h3>
+                            <i class="fa-solid fa-mosque text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">Spiritual & Moral Moral Wing</p>
+                            <p>Organizes spiritual gatherings, Majlis, Dikr halqa, and moral guidance programs for youth.</p>
+                        </div>
+                    </div>
+
+                    <!-- 4. Campus Wing -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-blue-700 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">4. Campus Wing</h3>
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">High School & College Student Guidance</p>
+                            <p>Empowering students in schools and colleges with career guidance, academic support, and ethics.</p>
+                        </div>
+                    </div>
+
+                    <!-- 5. Cyber Wing -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-purple-800 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">5. Cyber Wing</h3>
+                            <i class="fa-solid fa-laptop-code text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">IT & Digital Media Wing</p>
+                            <p>Managing unit digital presence, content creation, social media awareness, and tech education.</p>
+                        </div>
+                    </div>
+
+                    <!-- 6. Quran Study Centre -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-teal-700 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">6. Quran Study Centre</h3>
+                            <i class="fa-solid fa-book-quran text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">Quranic Education & Tajweed</p>
+                            <p>Systematic Quranic learning classes and Recitation refinement courses for members.</p>
+                        </div>
+                    </div>
+
+                    <!-- 7. Sargalayam -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden hover:shadow-lg transition">
+                        <div class="bg-pink-700 text-white p-4 flex items-center justify-between">
+                            <h3 class="font-extrabold text-base">7. Sargalayam (സർഗാലയം)</h3>
+                            <i class="fa-solid fa-palette text-2xl"></i>
+                        </div>
+                        <div class="p-4 text-xs sm:text-sm text-gray-600 space-y-2">
+                            <p class="font-semibold text-gray-800">Arts, Literature & Creative Wing</p>
+                            <p>Encouraging artistic talent, Islamic calligraphy, creative writing, and cultural fests.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: GALLERY & MEMBER WRITINGS FEED -->
+            <div id="galleryTab" class="tab-content hidden space-y-6">
+                <!-- Create Post Box (Only visible if logged in) -->
+                <div id="createPostBox" class="bg-white p-5 rounded-xl shadow border border-gray-200 hidden">
+                    <h3 class="font-bold text-gray-900 text-sm mb-3"><i class="fa-solid fa-pen-to-square text-emerald-700 mr-2"></i>Post Photo or Article as Member</h3>
+                    <div class="space-y-3">
+                        <textarea id="postText" rows="3" placeholder="Write an update, essay, or announcement..." class="w-full p-3 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"></textarea>
+                        <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
+                            <input type="file" id="postImageInput" accept="image/*" class="text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                            <button onclick="createNewPost()" class="bg-emerald-800 hover:bg-emerald-900 text-white px-5 py-2 rounded-lg text-xs font-bold shadow transition">Publish Post</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feed Posts Container -->
+                <div id="publicPostsFeed" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Sample Post 1 -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span class="font-bold text-emerald-800"><i class="fa-solid fa-circle-user mr-1"></i> MUHAMMED JASIR</span>
+                                <span>1 Oct 2026</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-sm sm:text-base">പണ്ടിക്കടവ് യൂണിറ്റ് മീലാദ് സമ്മേളനം വിജയിപ്പിക്കുക</h4>
+                            <p class="text-xs text-gray-600">സമസ്ത കേരള സുന്നി സ്റ്റുഡന്റ്സ് ഫെഡറേഷൻ പണ്ടിക്കടവ് യൂണിറ്റിന്റെ വാർഷിക പരിപാടികളുടെ ഭാഗമായി വിവിധ വിംഗുകളുടെ ഏകോപന യോഗം ചേർന്നു.</p>
+                        </div>
+                    </div>
+
+                    <!-- Sample Post 2 -->
+                    <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=800&q=80" class="w-full h-48 object-cover">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <span class="font-bold text-emerald-800"><i class="fa-solid fa-circle-user mr-1"></i> AMEER SUHAIL YAMANI</span>
+                                <span>25 Sep 2026</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900 text-sm sm:text-base">സർഗാലയം സാഹിത്യ വിംഗ് പ്രതിഭാ സംഗമം</h4>
+                            <p class="text-xs text-gray-600">യുവതലമുറയിലെ സാഹിത്യ സർഗ്ഗാത്മക കഴിവുകൾ വളർത്തുന്നതിനായി സംഘടിപ്പിച്ച സാഹിത്യ പരിശീലന ക്ലാസ്സ് ശ്രദ്ധേയമായി.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: SAHACHARI RELIEF SUPPORT -->
+            <div id="sahachariTab" class="tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow border border-gray-200 max-w-3xl mx-auto">
+                    <div class="text-center mb-6">
+                        <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-gray-900">Sahachari Relief Cell</h2>
+                        <p class="text-xs sm:text-sm text-gray-600">Apply for financial or medical aid from Pandikkadave Unit Sahachari Fund.</p>
+                    </div>
+
+                    <form onsubmit="handleSahachariSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Applicant Name</label>
+                                <input type="text" required class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Contact Number</label>
+                                <input type="tel" required class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Relief Category</label>
+                            <select class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                                <option>Medical Assistance</option>
+                                <option>Educational Aid</option>
+                                <option>Marriage Assistance</option>
+                                <option>Emergency Family Support</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Details of Request</label>
+                            <textarea rows="4" required placeholder="Explain requirement..." class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 rounded-lg text-xs sm:text-sm transition shadow">Submit Relief Application</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TAB 6: LOGGED IN MEMBER DASHBOARD & PROFILE EDITOR -->
+            <div id="profileDashboardTab" class="tab-content hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow border border-gray-200">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-gray-200 mb-6 gap-4">
+                        <div>
+                            <h2 class="text-2xl font-black text-emerald-950">Member Dashboard</h2>
+                            <p class="text-xs text-gray-500">Manage your profile, picture, and unit membership ID card.</p>
+                        </div>
+                        <button onclick="logoutMember()" class="bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold px-4 py-2 rounded text-xs transition">
+                            <i class="fa-solid fa-right-from-bracket mr-1"></i> Sign Out
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- LEFT COLUMN: Profile Editor Form -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <h3 class="font-bold text-gray-900 text-base border-b pb-2"><i class="fa-solid fa-user-pen text-emerald-700 mr-2"></i>Edit Profile Information</h3>
+                            
+                            <form onsubmit="saveProfileChanges(event)" class="space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="relative">
+                                        <img id="editProfilePreview" src="https://via.placeholder.com/100" class="w-20 h-20 rounded-full object-cover border-2 border-emerald-600 shadow">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Change Profile Photo</label>
+                                        <input type="file" id="profileImageInput" accept="image/*" onchange="previewProfileImage(event)" class="text-xs text-gray-500 file:mr-2 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Full Name</label>
+                                        <input type="text" id="editName" readonly class="w-full p-2.5 bg-gray-100 border border-gray-300 rounded text-xs sm:text-sm font-semibold text-gray-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Membership Number</label>
+                                        <input type="text" id="editMemberNo" readonly class="w-full p-2.5 bg-gray-100 border border-gray-300 rounded text-xs sm:text-sm font-semibold text-gray-600">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Mobile Phone</label>
+                                        <input type="tel" id="editMobile" class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">WhatsApp Number</label>
+                                        <input type="tel" id="editWhatsapp" class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Assigned Sub-Wing</label>
+                                    <select id="editWing" class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm">
+                                        <option value="General Member">General Member</option>
+                                        <option value="Sahachari">Sahachari (Relief)</option>
+                                        <option value="Viqaya">Viqaya (Volunteers)</option>
+                                        <option value="Twaha">Twaha (Spiritual)</option>
+                                        <option value="Campus Wing">Campus Wing</option>
+                                        <option value="Cyber Wing">Cyber Wing</option>
+                                        <option value="Quran Study Centre">Quran Study Centre</option>
+                                        <option value="Sargalayam">Sargalayam (Arts & Literature)</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Short Bio / Status</label>
+                                    <textarea id="editBio" rows="2" placeholder="Write a short line about yourself..." class="w-full p-2.5 border border-gray-300 rounded text-xs sm:text-sm"></textarea>
+                                </div>
+
+                                <button type="submit" class="bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2.5 px-6 rounded-lg text-xs sm:text-sm shadow transition">
+                                    Save Profile Updates
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- RIGHT COLUMN: Digital Membership ID Card Preview -->
+                        <div class="space-y-4">
+                            <h3 class="font-bold text-gray-900 text-base border-b pb-2"><i class="fa-solid fa-id-card text-emerald-700 mr-2"></i>Digital SKSSF ID Card</h3>
+                            
+                            <div id="digitalIdCard" class="bg-gradient-to-br from-emerald-900 via-emerald-800 to-green-950 text-white rounded-2xl p-5 shadow-2xl border-2 border-amber-400 relative overflow-hidden">
+                                <!-- ID Header -->
+                                <div class="flex justify-between items-center border-b border-emerald-600/60 pb-3 mb-4">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 bg-white text-emerald-900 font-black rounded-full flex items-center justify-center text-xs">SKSSF</div>
+                                        <div>
+                                            <p class="text-xs font-black tracking-wider leading-none">SKSSF</p>
+                                            <p class="text-[9px] text-amber-300 leading-tight">PANDIKKADAVE UNIT</p>
+                                        </div>
+                                    </div>
+                                    <span class="text-[10px] bg-amber-400 text-gray-900 font-extrabold px-2 py-0.5 rounded-full uppercase">Verified</span>
+                                </div>
+
+                                <!-- ID Content -->
+                                <div class="flex gap-4 items-center mb-4">
+                                    <img id="cardPhoto" src="https://via.placeholder.com/100" class="w-20 h-24 object-cover rounded-lg border-2 border-amber-300 shadow bg-white">
+                                    <div class="space-y-1 text-xs">
+                                        <p class="font-black text-sm text-amber-300 leading-tight" id="cardName">MUHAMMED JASIR</p>
+                                        <p class="text-[11px] text-emerald-100 font-semibold" id="cardMemberNo">ID: 2026/115126</p>
+                                        <p class="text-[10px] text-gray-200" id="cardWing">General Member</p>
+                                        <p class="text-[10px] text-emerald-300" id="cardPhone">+91 8137943171</p>
+                                    </div>
+                                </div>
+
+                                <!-- ID Footer with QR -->
+                                <div class="bg-emerald-950/70 p-2 rounded-xl flex items-center justify-between border border-emerald-700/50">
+                                    <div class="text-[9px] text-gray-300">
+                                        <p>Samastha Kerala Sunni</p>
+                                        <p>Students Federation</p>
+                                    </div>
+                                    <div id="qrcode" class="bg-white p-1 rounded"></div>
+                                </div>
+                            </div>
+
+                            <button onclick="window.print()" class="w-full bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold py-2 rounded text-xs transition shadow flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-print"></i> Print / Download ID Card
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MEMBER LOGIN MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-gray-100 relative">
+            <button onclick="closeLoginModal()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 bg-emerald-100 text-emerald-800 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl font-black border-2 border-emerald-600">
+                    SK
+                </div>
+                <h3 class="text-xl font-extrabold text-gray-900">Member Portal Login</h3>
+                <p class="text-xs text-gray-500 mt-1">Use your registered Name and Membership Number</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">User Name (Full Name)</label>
+                    <input type="text" id="loginUsername" required placeholder="e.g. MUHAMMED JASIR" class="w-full p-3 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Password (Membership Number)</label>
+                    <input type="text" id="loginPassword" required placeholder="e.g. 2026/115126" class="w-full p-3 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+
+                <div id="loginError" class="text-xs text-rose-600 font-semibold hidden">
+                    Invalid Name or Membership Number. Please check your details.
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3 rounded-lg text-xs sm:text-sm transition shadow">
+                    Sign In to Portal
+                </button>
+            </form>
+
+            <div class="mt-4 pt-4 border-t border-gray-100 text-center">
+                <p class="text-xs text-gray-500 mb-2">Want to test instantly?</p>
+                <button onclick="quickDemoLogin()" class="bg-amber-100 text-amber-900 hover:bg-amber-200 font-bold px-3 py-1.5 rounded text-xs transition">
+                    Quick Demo Login (MUHAMMED JASIR)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP ENGINE -->
+    <script>
+        // 113 MEMBERS DATA INITIALIZATION
+        const MEMBERS_DATA = [{"Name": "MUHAMMED ANSIF", "Mobile": "7558856288", "WhatsApp": "7558856288", "Membership Number": "2026/115311", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SWALIH T N", "Mobile": "9747599603", "WhatsApp": "9947599606", "Membership Number": "2026/115310", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NASAR", "Mobile": "9947171953", "WhatsApp": "9947171953", "Membership Number": "2026/115309", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NAVAS T", "Mobile": "9605457211", "WhatsApp": "9605457211", "Membership Number": "2026/115308", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NASEER VC", "Mobile": "9745298501", "WhatsApp": "9745298501", "Membership Number": "2026/115307", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAMEER A P", "Mobile": "9656837938", "WhatsApp": "9656837938", "Membership Number": "2026/115306", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED ASLAM M B", "Mobile": "7558849475", "WhatsApp": "7558849475", "Membership Number": "2026/115305", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED AMIR VK", "Mobile": "9562216528", "WhatsApp": "9562216528", "Membership Number": "2026/115304", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NISAM DARIMI", "Mobile": "8590748312", "WhatsApp": "8590748312", "Membership Number": "2026/115303", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SHIJAS", "Mobile": "7907435854", "WhatsApp": "7907435854", "Membership Number": "2026/115301", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "BADARUDHEEN", "Mobile": "8078256216", "WhatsApp": "8078256216", "Membership Number": "2026/115300", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDUL MUTHALIB V K", "Mobile": "9605598472", "WhatsApp": "9605598472", "Membership Number": "2026/115299", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "HAFIZ MISHAB C K", "Mobile": "9744860462", "WhatsApp": "9744860462", "Membership Number": "2026/115298", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SHAFEEK A", "Mobile": "9747199614", "WhatsApp": "9747199614", "Membership Number": "2026/115296", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AMAN SAJAD", "Mobile": "7025564504", "WhatsApp": "7025564504", "Membership Number": "2026/115290", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED ADHNAN T", "Mobile": "9961154142", "WhatsApp": "919961154142", "Membership Number": "2026/115289", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SINAN C M", "Mobile": "9961458687", "WhatsApp": "9961458687", "Membership Number": "2026/115286", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMAD MISHAL M", "Mobile": "8113963491", "WhatsApp": "8113963491", "Membership Number": "2026/115285", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED JASIL", "Mobile": "9747170674", "WhatsApp": "9747170674", "Membership Number": "2026/115284", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED FAIZ C", "Mobile": "9961240504", "WhatsApp": "9961240504", "Membership Number": "2026/115283", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED ADIL", "Mobile": "9188804135", "WhatsApp": "9188804135", "Membership Number": "2026/115282", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED RABEEH", "Mobile": "9400338006", "WhatsApp": "919400338006", "Membership Number": "2026/115281", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "YOUNUS V K", "Mobile": "8156808456", "WhatsApp": "8156808456", "Membership Number": "2026/115280", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED", "Mobile": "7558976339", "WhatsApp": "7558976339", "Membership Number": "2026/115279", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED AJNAS T M", "Mobile": "9961470976", "WhatsApp": "9961470976", "Membership Number": "2026/115278", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "HADHIN AFNAN P V", "Mobile": "8547142691", "WhatsApp": "8547142691", "Membership Number": "2026/115277", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NAJAD V", "Mobile": "9605142226", "WhatsApp": "9605142226", "Membership Number": "2026/115276", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NAEEM P", "Mobile": "7034066560", "WhatsApp": "7034066560", "Membership Number": "2026/115275", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED MIDLAJ", "Mobile": "9544074827", "WhatsApp": "9544074827", "Membership Number": "2026/115274", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SIYAN", "Mobile": "9744097280", "WhatsApp": "9744097280", "Membership Number": "2026/115272", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NAFIL K N", "Mobile": "9544311819", "WhatsApp": "9544311819", "Membership Number": "2026/115271", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDUNAFIH N K", "Mobile": "6238406025", "WhatsApp": "6238406025", "Membership Number": "2026/115270", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SALMANULFAYIS", "Mobile": "9562747795", "WhatsApp": "9562747795", "Membership Number": "2026/115268", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ASHAD K", "Mobile": "9847517305", "WhatsApp": "9847517305", "Membership Number": "2026/115267", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SINAN", "Mobile": "9744120580", "WhatsApp": "9744120580", "Membership Number": "2026/115266", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SUBAIR VK", "Mobile": "9400845416", "WhatsApp": "919400845416", "Membership Number": "2026/115265", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAFEER", "Mobile": "9539277763", "WhatsApp": "9539277763", "Membership Number": "2026/115264", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AJNAS K", "Mobile": "8593075095", "WhatsApp": "8593075095", "Membership Number": "2026/115263", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SINAN A", "Mobile": "7510490709", "WhatsApp": "7510490709", "Membership Number": "2026/115262", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SHAFEEK", "Mobile": "9961025095", "WhatsApp": "9961025095", "Membership Number": "2026/115261", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AJMAL K", "Mobile": "9526357703", "WhatsApp": "9526357703", "Membership Number": "2026/115260", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ANSIL CK", "Mobile": "8157007695", "WhatsApp": "8157007695", "Membership Number": "2026/115259", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AMEER SUHAIL YAMANI", "Mobile": "8606640401", "WhatsApp": "8606640401", "Membership Number": "2026/115258", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDUL HAKEEM", "Mobile": "9447883582", "WhatsApp": "9447883582", "Membership Number": "2026/115231", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ASHNAD SHAHUL", "Mobile": "9562206035", "WhatsApp": "9562206035", "Membership Number": "2026/115226", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SADIQUE", "Mobile": "8606860663", "WhatsApp": "8606860663", "Membership Number": "2026/115225", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDUL SAMAD C", "Mobile": "9744190843", "WhatsApp": "9744190843", "Membership Number": "2026/115224", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED ASHIQ", "Mobile": "7559819071", "WhatsApp": "7559819071", "Membership Number": "2026/115223", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SADIQUE ALI A P", "Mobile": "9947347226", "WhatsApp": "9947347226", "Membership Number": "2026/115222", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED JASIM", "Mobile": "8590547797", "WhatsApp": "8590547797", "Membership Number": "2026/115221", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUNEER M", "Mobile": "7559039302", "WhatsApp": "7559039302", "Membership Number": "2026/115220", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "HAFIZ SHAMNAS", "Mobile": "6235621506", "WhatsApp": "6235621506", "Membership Number": "2026/115219", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NASEEB", "Mobile": "7356181396", "WhatsApp": "7356181396", "Membership Number": "2026/115216", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AFSAL GAZALI", "Mobile": "6235735454", "WhatsApp": "6235735454", "Membership Number": "2026/115215", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ASHIQUE P", "Mobile": "9605042796", "WhatsApp": "9605042786", "Membership Number": "2026/115212", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NIYAS M", "Mobile": "9744020624", "WhatsApp": "9744020624", "Membership Number": "2026/115211", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SHUHAIB K", "Mobile": "9744403634", "WhatsApp": "9744403634", "Membership Number": "2026/115209", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NIZAMUDHEEN V M", "Mobile": "9526440726", "WhatsApp": "9526440726", "Membership Number": "2026/115208", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED RASIN K", "Mobile": "9562843865", "WhatsApp": "9526843865", "Membership Number": "2026/115206", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ANAS A N", "Mobile": "8138008858", "WhatsApp": "8138008858", "Membership Number": "2026/115205", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "RAYEES A", "Mobile": "9656364636", "WhatsApp": "9656364636", "Membership Number": "2026/115203", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "RAMEES M R", "Mobile": "9946190721", "WhatsApp": "9946190721", "Membership Number": "2026/115202", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SAHAL A", "Mobile": "7025842963", "WhatsApp": "7025842963", "Membership Number": "2026/115195", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "UNAIS", "Mobile": "9633330308", "WhatsApp": "9633330308", "Membership Number": "2026/115194", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SHAMIL", "Mobile": "9605217411", "WhatsApp": "9605217411", "Membership Number": "2026/115193", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "UKKASH", "Mobile": "7025347226", "WhatsApp": "7025347226", "Membership Number": "2026/115192", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "JAMSHEED", "Mobile": "9656286404", "WhatsApp": "9656286404", "Membership Number": "2026/115191", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "JASIM", "Mobile": "8156815742", "WhatsApp": "8156815742", "Membership Number": "2026/115190", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SAJIR K", "Mobile": "9544040885", "WhatsApp": "9544040885", "Membership Number": "2026/115189", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AJNAS C", "Mobile": "9526450302", "WhatsApp": "9526450302", "Membership Number": "2026/115188", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "JASEER P K", "Mobile": "7306315312", "WhatsApp": "7306315312", "Membership Number": "2026/115187", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "RIYAS K K", "Mobile": "8139806667", "WhatsApp": "8139806667", "Membership Number": "2026/115184", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED FASEEH", "Mobile": "6238317964", "WhatsApp": "6238317964", "Membership Number": "2026/115183", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SWALIH", "Mobile": "9207820532", "WhatsApp": "9207820532", "Membership Number": "2026/115182", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED HAIZAM", "Mobile": "9061267861", "WhatsApp": "9061267861", "Membership Number": "2026/115181", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAJEER V K", "Mobile": "9645818754", "WhatsApp": "9645818754", "Membership Number": "2026/115180", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "FAISAL A", "Mobile": "9847135979", "WhatsApp": "9847135979", "Membership Number": "2026/115179", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAVITHALI A", "Mobile": "9497535451", "WhatsApp": "9497535451", "Membership Number": "2026/115178", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "RASMIN M R", "Mobile": "7034946159", "WhatsApp": "7034946159", "Membership Number": "2026/115177", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED AJNAS M", "Mobile": "9544255396", "WhatsApp": "9544255396", "Membership Number": "2026/115176", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ANAS P V", "Mobile": "8943888388", "WhatsApp": "8943888388", "Membership Number": "2026/115175", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED AMEEN P V", "Mobile": "8590558077", "WhatsApp": "8590558077", "Membership Number": "2026/115174", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHSIN K", "Mobile": "7558822527", "WhatsApp": "7558822527", "Membership Number": "2026/115173", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MIDLAJ", "Mobile": "7907041010", "WhatsApp": "7907041010", "Membership Number": "2026/115172", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SHANOOP A", "Mobile": "9656629114", "WhatsApp": "9656629114", "Membership Number": "2026/115171", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAFVAN V K", "Mobile": "9947955098", "WhatsApp": "9947955098", "Membership Number": "2026/115170", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED SAJIR", "Mobile": "9747012778", "WhatsApp": "9747012778", "Membership Number": "2026/115169", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED YASIR", "Mobile": "9778522713", "WhatsApp": "9778522713", "Membership Number": "2026/115160", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ADNAN", "Mobile": "7511163370", "WhatsApp": "7511163370", "Membership Number": "2026/115157", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "NISAR", "Mobile": "9946186276", "WhatsApp": "9946186276", "Membership Number": "2026/115154", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SHAFI", "Mobile": "7902903803", "WhatsApp": "7902903803", "Membership Number": "2026/115142", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ANAS FAISY", "Mobile": "6282537796", "WhatsApp": "6282537796", "Membership Number": "2026/115141", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AFSAL SHAN SANAE", "Mobile": "9207932754", "WhatsApp": "9207932754", "Membership Number": "2026/115140", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUSTHAFA K P", "Mobile": "9544928272", "WhatsApp": "9544928272", "Membership Number": "2026/115139", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "JEREESH M M", "Mobile": "9495773789", "WhatsApp": "9495773789", "Membership Number": "2026/115138", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDULLA A", "Mobile": "9947271298", "WhatsApp": "9947271298", "Membership Number": "2026/115137", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "AFSAL C K", "Mobile": "8590755179", "WhatsApp": "8590755179", "Membership Number": "2026/115135", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SINAN", "Mobile": "6238295135", "WhatsApp": "6238295135", "Membership Number": "2026/115131", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SIRAJ", "Mobile": "7907465972", "WhatsApp": "7907465972", "Membership Number": "2026/115130", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "FAISAL", "Mobile": "9656500945", "WhatsApp": "9656500945", "Membership Number": "2026/115129", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "RINSHAD ALI", "Mobile": "9747015904", "WhatsApp": "9747015904", "Membership Number": "2026/115128", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SAJIR FAISY", "Mobile": "8606272925", "WhatsApp": "8606272925", "Membership Number": "2026/115127", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED JASIR", "Mobile": "8137943171", "WhatsApp": "8137943171", "Membership Number": "2026/115126", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED LABEEB K", "Mobile": "6282407613", "WhatsApp": "6282407613", "Membership Number": "2026/115125", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SIRAJUDHEEN V", "Mobile": "9995919960", "WhatsApp": "9995919960", "Membership Number": "2026/115124", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SALEEM C U", "Mobile": "9446648351", "WhatsApp": "9446648351", "Membership Number": "2026/115123", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED RASHID YAMANI", "Mobile": "8606860159", "WhatsApp": "8606860159", "Membership Number": "2026/115122", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMED NASEEM", "Mobile": "9846834434", "WhatsApp": "9846834494", "Membership Number": "2026/115121", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUNEER FAISY", "Mobile": "8075106002", "WhatsApp": "8075106002", "Membership Number": "2026/115117", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "SHAHEEM FAISY", "Mobile": "7561849668", "WhatsApp": "7561849668", "Membership Number": "2026/115114", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "MUHAMMAD NISHAD V", "Mobile": "9562668494", "WhatsApp": "9562668494", "Membership Number": "2026/115113", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "ABDUL KADER E K", "Mobile": "9747023133", "WhatsApp": "9747023133", "Membership Number": "2026/115112", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}, {"Name": "HAFSAL. CH", "Mobile": "9562768148", "WhatsApp": "9562768148", "Membership Number": "2026/115088", "Status": "Verified Member", "Unit Name": "PANDIKKADAVU"}];
+
+        let loggedInUser = null;
+        let qrCodeObj = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMembersTable(MEMBERS_DATA);
+            checkSavedSession();
+        });
+
+        // VIEW MODE SWITCHER (Web vs Mobile App)
+        function toggleViewMode() {
+            const container = document.getElementById('appContainer');
+            const toggleText = document.getElementById('toggleBtnText');
+            if (container.classList.contains('mobile-view')) {
+                container.classList.remove('mobile-view');
+                toggleText.innerText = "Switch to App View";
+            } else {
+                container.classList.add('mobile-view');
+                toggleText.innerText = "Switch to Web View";
+            }
+        }
+
+        // NAVIGATION TAB SWITCHER
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('bg-emerald-700', 'font-bold'));
+            
+            const selectedTab = document.getElementById(tabId);
+            if(selectedTab) selectedTab.classList.remove('hidden');
+            
+            const activeBtn = document.getElementById(tabId + 'Btn');
+            if(activeBtn) activeBtn.classList.add('bg-emerald-700', 'font-bold');
+        }
+
+        // RENDER MEMBERS DIRECTORY TABLE
+        function renderMembersTable(members) {
+            const tbody = document.getElementById('membersTableBody');
+            tbody.innerHTML = '';
+            members.forEach(m => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-gray-800">${m['Name']}</td>
+                    <td class="p-3 font-mono text-emerald-800 font-semibold">${m['Membership Number']}</td>
+                    <td class="p-3">${m['Mobile']}</td>
+                    <td class="p-3"><a href="https://wa.me/91${m['WhatsApp']}" target="_blank" class="text-green-600 hover:underline"><i class="fa-brands fa-whatsapp mr-1"></i>${m['WhatsApp']}</a></td>
+                    <td class="p-3 text-center"><span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">${m['Status']}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // FILTER MEMBERS SEARCH
+        function filterMembers() {
+            const query = document.getElementById('memberSearchInput').value.toLowerCase();
+            const filtered = MEMBERS_DATA.filter(m => 
+                m['Name'].toLowerCase().includes(query) || 
+                m['Membership Number'].toLowerCase().includes(query)
+            );
+            renderMembersTable(filtered);
+        }
+
+        // LOGIN / AUTH SYSTEM
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            const uname = document.getElementById('loginUsername').value.trim().toUpperCase();
+            const pass = document.getElementById('loginPassword').value.trim();
+
+            const found = MEMBERS_DATA.find(m => 
+                m['Name'].toUpperCase() === uname && 
+                m['Membership Number'] === pass
+            );
+
+            if(found) {
+                loginAsMember(found);
+                closeLoginModal();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function quickDemoLogin() {
+            const jasir = MEMBERS_DATA.find(m => m['Name'] === 'MUHAMMED JASIR');
+            if(jasir) {
+                loginAsMember(jasir);
+                closeLoginModal();
+            }
+        }
+
+        function loginAsMember(user) {
+            loggedInUser = user;
+            // Load saved local profile updates if exists
+            const savedPhoto = localStorage.getItem('photo_' + user['Membership Number']);
+            const savedWing = localStorage.getItem('wing_' + user['Membership Number']);
+            const savedBio = localStorage.getItem('bio_' + user['Membership Number']);
+
+            if(savedPhoto) loggedInUser['Photo'] = savedPhoto;
+            if(savedWing) loggedInUser['Wing'] = savedWing;
+            if(savedBio) loggedInUser['Bio'] = savedBio;
+
+            localStorage.setItem('skssf_user', JSON.stringify(loggedInUser));
+            updateUIForLoggedInUser();
+        }
+
+        function checkSavedSession() {
+            const saved = localStorage.getItem('skssf_user');
+            if(saved) {
+                loggedInUser = JSON.parse(saved);
+                updateUIForLoggedInUser();
+            }
+        }
+
+        function updateUIForLoggedInUser() {
+            if(!loggedInUser) return;
+
+            // Header status update
+            document.getElementById('authNavText').innerText = "Dashboard (" + loggedInUser['Name'].split(' ')[0] + ")";
+            document.getElementById('createPostBox').classList.remove('hidden');
+
+            // Home Card Update
+            document.getElementById('homeUserCard').innerHTML = `
+                <img src="${loggedInUser['Photo'] || 'https://via.placeholder.com/100'}" class="w-16 h-16 rounded-full mx-auto object-cover border-2 border-emerald-600 mb-2 shadow">
+                <p class="text-sm font-bold text-gray-900">${loggedInUser['Name']}</p>
+                <p class="text-xs text-emerald-800 font-mono font-semibold mb-3">${loggedInUser['Membership Number']}</p>
+                <button onclick="showTab('profileDashboardTab')" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-2 px-4 rounded text-xs transition">
+                    Open Profile & Digital ID
+                </button>
+            `;
+
+            // Fill Dashboard Profile Form
+            document.getElementById('editName').value = loggedInUser['Name'];
+            document.getElementById('editMemberNo').value = loggedInUser['Membership Number'];
+            document.getElementById('editMobile').value = loggedInUser['Mobile'];
+            document.getElementById('editWhatsapp').value = loggedInUser['WhatsApp'];
+            document.getElementById('editWing').value = loggedInUser['Wing'] || 'General Member';
+            document.getElementById('editBio').value = loggedInUser['Bio'] || '';
+            document.getElementById('editProfilePreview').src = loggedInUser['Photo'] || 'https://via.placeholder.com/100';
+
+            // Fill Digital ID Card
+            document.getElementById('cardName').innerText = loggedInUser['Name'];
+            document.getElementById('cardMemberNo').innerText = 'ID: ' + loggedInUser['Membership Number'];
+            document.getElementById('cardWing').innerText = loggedInUser['Wing'] || 'General Member';
+            document.getElementById('cardPhone').innerText = '+91 ' + loggedInUser['Mobile'];
+            document.getElementById('cardPhoto').src = loggedInUser['Photo'] || 'https://via.placeholder.com/100';
+
+            // Generate QR Code for ID Card
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            qrCodeObj = new QRCode(qrContainer, {
+                text: "SKSSF-PANDIKKADAVE:" + loggedInUser['Membership Number'] + ":" + loggedInUser['Name'],
+                width: 48,
+                height: 48
+            });
+        }
+
+        function handleAuthButtonClick() {
+            if(loggedInUser) {
+                showTab('profileDashboardTab');
+            } else {
+                openLoginModal();
+            }
+        }
+
+        function logoutMember() {
+            loggedInUser = null;
+            localStorage.removeItem('skssf_user');
+            location.reload();
+        }
+
+        // PROFILE PICTURE PREVIEW & SAVE
+        function previewProfileImage(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const dataUrl = evt.target.result;
+                    document.getElementById('editProfilePreview').src = dataUrl;
+                    document.getElementById('cardPhoto').src = dataUrl;
+                    if(loggedInUser) {
+                        loggedInUser['Photo'] = dataUrl;
+                        localStorage.setItem('photo_' + loggedInUser['Membership Number'], dataUrl);
+                    }
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveProfileChanges(e) {
+            e.preventDefault();
+            if(!loggedInUser) return;
+
+            loggedInUser['Mobile'] = document.getElementById('editMobile').value;
+            loggedInUser['WhatsApp'] = document.getElementById('editWhatsapp').value;
+            loggedInUser['Wing'] = document.getElementById('editWing').value;
+            loggedInUser['Bio'] = document.getElementById('editBio').value;
+
+            localStorage.setItem('wing_' + loggedInUser['Membership Number'], loggedInUser['Wing']);
+            localStorage.setItem('bio_' + loggedInUser['Membership Number'], loggedInUser['Bio']);
+            localStorage.setItem('skssf_user', JSON.stringify(loggedInUser));
+
+            updateUIForLoggedInUser();
+            alert('Profile updated successfully!');
+        }
+
+        // CREATE PUBLIC POST
+        function createNewPost() {
+            const text = document.getElementById('postText').value.trim();
+            const fileInput = document.getElementById('postImageInput');
+            if(!text) {
+                alert('Please write something before publishing.');
+                return;
+            }
+
+            const feed = document.getElementById('publicPostsFeed');
+            const postCard = document.createElement('div');
+            postCard.className = "bg-white rounded-xl shadow border border-gray-200 overflow-hidden";
+
+            let imgSrc = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80";
+            
+            const renderCard = (img) => {
+                postCard.innerHTML = `
+                    <img src="${img}" class="w-full h-48 object-cover">
+                    <div class="p-4 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span class="font-bold text-emerald-800"><i class="fa-solid fa-circle-user mr-1"></i> ${loggedInUser['Name']}</span>
+                            <span>Just now</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-gray-800 font-semibold">${text}</p>
+                    </div>
+                `;
+                feed.prepend(postCard);
+                document.getElementById('postText').value = '';
+                fileInput.value = '';
+                alert('Post published to public feed!');
+            };
+
+            if(fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (evt) => renderCard(evt.target.result);
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                renderCard(imgSrc);
+            }
+        }
+
+        function handleSahachariSubmit(e) {
+            e.preventDefault();
+            alert('Your Sahachari Relief application has been submitted to Pandikkadave Unit Committee.');
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
