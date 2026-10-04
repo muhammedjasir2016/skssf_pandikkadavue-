@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKSSF Pandikkadave Unit - Official Website & Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+Malayalam:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Malayalam', sans-serif;
+            background-color: #f4f6f8;
+        }
+        .skssf-green { background-color: #006837; }
+        .skssf-green-dark { background-color: #004d28; }
+        .skssf-gold { background-color: #d4af37; }
+        .text-skssf-green { color: #006837; }
+        .border-skssf-green { border-color: #006837; }
+        
+        /* Simulated Mobile Container */
+        .mobile-view {
+            max-width: 430px;
+            margin: 20px auto;
+            border-radius: 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            border: 12px solid #1f2937;
+            overflow: hidden;
+            background: #f4f6f8;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Custom Header Background */
+        .custom-header-bg {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.75)), url('https://i.postimg.cc/L8N6Cr9h/Beige-Aesthetic-Elegant-Minimalist-Name-Linked-In-Background-Photo.png');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- View Mode Switcher Header Bar -->
+    <header class="bg-gray-900 text-white py-2 px-4 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-sm">
+            <div class="flex items-center space-x-2">
+                <span class="inline-block w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="font-semibold text-xs sm:text-sm">SKSSF Pandikkadave Unit Portal</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="viewToggleBtn" onclick="toggleViewMode()" class="bg-amber-500 hover:bg-amber-600 text-gray-900 px-3 py-1 rounded-full text-xs font-bold transition flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-mobile-screen"></i> <span id="toggleBtnText">Switch to App View</span>
+                </button>
+                <div id="userHeaderStatus" class="hidden sm:flex items-center gap-2">
+                    <!-- Populated dynamically if logged in -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div id="appContainer" class="w-full flex-grow transition-all duration-300">
+        
+        <!-- TOP BRANDING BANNER WITH CUSTOM BACKGROUND -->
+        <div id="headerBanner" class="custom-header-bg border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 rounded-full flex items-center justify-center text-white font-extrabold text-xl shadow-md border-2 border-amber-400 flex-shrink-0">
+                        SKSSF
+                    </div>
+                    <div>
+                        <h1 class="text-2xl sm:text-3xl font-extrabold text-emerald-900 tracking-tight">SKSSF</h1>
+                        <p class="text-xs sm:text-sm font-semibold text-gray-700">Samastha Kerala Sunni Students Federation</p>
+                        <p class="text-xs text-amber-700 font-bold tracking-wider">PANDIKKADAVE UNIT</p>
+                    </div>
+                </div>
+                <div class="text-center md:text-right bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-emerald-200 shadow-sm">
+                    <p class="text-xs text-emerald-800 font-semibold mb-1">നമ്മുടെ ലക്ഷ്യം:</p>
+                    <p class="text-sm sm:text-base font-bold text-emerald-950 font-malayalam">"വിജ്ഞാനം, വിനയം, സേവനം"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN NAVIGATION MENU -->
+        <nav class="skssf-green text-white shadow-lg sticky top-10 z-40">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex items-center justify-between h-12 overflow-x-auto hide-scrollbar">
+                    <div class="flex items-center space-x-1 sm:space-x-4 text-xs sm:text-sm font-semibold whitespace-nowrap">
+                        <button onclick="showTab('homeTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition active-nav" id="homeTabBtn"><i class="fa-solid fa-house mr-1"></i> Home</button>
+                        <button onclick="showTab('membersTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="membersTabBtn"><i class="fa-solid fa-users mr-1"></i> Members Directory</button>
+                        <button onclick="showTab('wingsTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="wingsTabBtn"><i class="fa-solid fa-sitemap mr-1"></i> 7 Sub Wings</button>
+                        <button onclick="showTab('galleryTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="galleryTabBtn"><i class="fa-solid fa-images mr-1"></i> Gallery & Writings</button>
+                        <button onclick="showTab('sahachariTab')" class="nav-link px-3 py-2 rounded hover:bg-emerald-700 transition" id="sahachariTabBtn"><i class="fa-solid fa-hand-holding-heart mr-1"></i> Sahachari Relief</button>
+                    </div>
+                    <div class="pl-4 border-l border-emerald-600">
+                        <button id="authNavBtn" onclick="handleAuthButtonClick()" class="bg-amber-400 hover:bg-amber-500 text-emerald-950 px-3 py-1.5 rounded text-xs font-bold transition flex items-center gap-1 shadow">
+                            <i class="fa-solid fa-right-to-bracket"></i> <span id="authNavText">Member Login</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- MAIN BODY CONTENT AREA -->
+        <main class="max-w-7xl mx-auto px-4 py-6">
+
+            <!-- TAB 1: HOME PAGE -->
+            <div id="homeTab" class="tab-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                        <div class="relative bg-emerald-900 text-white h-64 sm:h-80 flex items-end p-6 bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1000&q=80');">
+                            <div>
+                                <span class="bg-amber-500 text-gray-900 text-xs font-extrabold px-2.5 py-1 rounded mb-2 inline-block">UNIT HIGHLIGHT</span>
+                                <h2 class="text-xl sm:text-2xl font-bold text-white mb-2 leading-tight">എസ്.കെ.എസ്.എസ്.എഫ് പണ്ടിക്കടവ് യൂണിറ്റ് പ്രവർത്തനം വിപുലീകരിക്കുന്നു</h2>
+                                <p class="text-xs sm:text-sm text-gray-200 line-clamp-2">യൂണിറ്റിലെ 113 അംഗങ്ങളുടെ അംഗത്വ വിവരങ്ങളും പ്രവർത്തന രൂപരേഖയും ഡിജിറ്റൽ പോർട്ടലിലേക്ക് മാറ്റി.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-emerald-50 border-t border-emerald-100 flex justify-between items-center">
+                            <span class="text-xs text-emerald-800 font-semibold"><i class="fa-regular fa-clock mr-1"></i> Oct 2026</span>
+                            <span class="text-xs text-emerald-700 font-bold">Pandikkadave Unit Council</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow border border-gray-200 p-5 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+                                <h3 class="font-bold text-gray-900 text-base"><i class="fa-solid fa-address-card text-emerald-700 mr-2"></i>Member Status</h3>
+                                <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Verified</span>
+                            </div>
+                            
+                            <div id="homeUserCard" class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-center">
+                                <i class="fa-solid fa-circle-user text-5xl text-gray-400 mb-2"></i>
+                                <p class="text-sm font-bold text-gray-800">Public Visitor</p>
+                                <p class="text-xs text-gray-500 mb-3">Log in with your Membership No. to edit profile & access digital ID.</p>
+                                <button onclick="openLoginModal()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded text-xs transition">
+                                    Member Login
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Quick Stats</h4>
+                            <div class="grid grid-cols-2 gap-2 text-center">
+                                <div class="bg-emerald-50 p-2 rounded">
+                                    <p class="text-lg font-black text-emerald-800" id="totalMembersCount">113</p>
+                                    <p class="text-xs text-gray-600 font-medium">Unit Members</p>
+                                </div>
+                                <div class="bg-amber-50 p-2 rounded">
+                                    <p class="text-lg font-black text-amber-800">7</p>
+                                    <p class="text-xs text-gray-600 font-medium">Sub Wings</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
