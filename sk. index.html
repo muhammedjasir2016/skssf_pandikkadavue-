@@ -35,14 +35,6 @@
         }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Custom Header Background */
-        .custom-header-bg {
-            /* EDIT PHOTO URL HERE: Header Background Image */
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.75)), url('https://i.postimg.cc/L8N6Cr9h/Beige-Aesthetic-Elegant-Minimalist-Name-Linked-In-Background-Photo.png');
-            background-size: cover;
-            background-position: center;
-        }
     </style>
 </head>
 <body class="text-gray-800 antialiased min-h-screen flex flex-col">
@@ -68,25 +60,10 @@
     <!-- Main Content Wrapper -->
     <div id="appContainer" class="w-full flex-grow transition-all duration-300">
         
-        <!-- TOP BRANDING BANNER WITH CUSTOM BACKGROUND -->
-        <div id="headerBanner" class="custom-header-bg border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center space-x-4">
-                    <!-- EDIT PHOTO URL HERE: Optional Logo Image (Currently styled as text badge, replace inner HTML with <img> if needed) -->
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-800 rounded-full flex items-center justify-center text-white font-extrabold text-xl shadow-md border-2 border-amber-400 flex-shrink-0">
-                        SKSSF
-                    </div>
-                    <div>
-                        <h1 class="text-2xl sm:text-3xl font-extrabold text-emerald-900 tracking-tight">SKSSF</h1>
-                        <p class="text-xs sm:text-sm font-semibold text-gray-700">Samastha Kerala Sunni Students Federation</p>
-                        <p class="text-xs text-amber-700 font-bold tracking-wider">PANDIKKADAVE UNIT</p>
-                    </div>
-                </div>
-                <div class="text-center md:text-right bg-white/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-emerald-200 shadow-sm">
-                    <p class="text-xs text-emerald-800 font-semibold mb-1">നമ്മുടെ ലക്ഷ്യം:</p>
-                    <p class="text-sm sm:text-base font-bold text-emerald-950 font-malayalam">"വിജ്ഞാനം, വിനയം, സേവനം"</p>
-                </div>
-            </div>
+        <!-- CLEAN HEADER BANNER (IMAGE ONLY) -->
+        <div id="headerBanner" class="w-full border-b border-gray-200 overflow-hidden">
+            <!-- EDIT PHOTO URL HERE: Put your image link in src below -->
+            <img src="YOUR_HEADER_IMAGE_URL_HERE" alt="SKSSF Pandikkadave Header" class="w-full h-auto object-cover max-h-48 sm:max-h-64 block">
         </div>
 
         <!-- MAIN NAVIGATION MENU -->
@@ -116,7 +93,7 @@
             <div id="homeTab" class="tab-content space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="md:col-span-2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
-                        <!-- EDIT PHOTO URL HERE: Highlight Feature Banner Background Image -->
+                        <!-- Highlight Feature Banner -->
                         <div class="relative bg-emerald-900 text-white h-64 sm:h-80 flex items-end p-6 bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0,0,0,0.85), transparent), url('YOUR_HIGHLIGHT_BANNER_IMAGE_URL_HERE');">
                             <div>
                                 <span class="bg-amber-500 text-gray-900 text-xs font-extrabold px-2.5 py-1 rounded mb-2 inline-block">UNIT HIGHLIGHT</span>
@@ -138,8 +115,6 @@
                             </div>
                             
                             <div id="homeUserCard" class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-center">
-                                <!-- EDIT PHOTO URL HERE: User Avatar/Profile Image Placeholder -->
-                                <!-- Replace the <i> icon with <img src="YOUR_PROFILE_PHOTO_URL_HERE" class="w-16 h-16 rounded-full mx-auto mb-2 object-cover"> if needed -->
                                 <i class="fa-solid fa-circle-user text-5xl text-gray-400 mb-2"></i>
                                 <p class="text-sm font-bold text-gray-800">Public Visitor</p>
                                 <p class="text-xs text-gray-500 mb-3">Log in with your Membership No. to edit profile & access digital ID.</p>
